@@ -5,11 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
     <title>💰 Currency Converter 💰</title>
 </head>
 
 <body>
+    <nav>
+        <div class="container">
+            <a href="#" class="brand">💰currencyconverter</a>
+        </div>
+    </nav>
 
+    <div class="hero">
+        <div class="container">
+            <section class="intro">
+                <div class="row">
+                    <h3>Reliable exchange rates &amp; currency conversion for your business.</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                    <a href="https://github.com/codeshifu/currency-converter" class="btn">View on github</a>
+                </div>
+            </section>
+            <section>
+                <div class="row">
+                    <p class="rate"></p>
+                    <div class="input-group">
+                        <input id="from-val" type="text" value="1">
+                        <select name="from" id="from">
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <input id="to-val" type="text">
+                        <select name="to" id="to">
+                        </select>
+                    </div>
+                    <button id="convert" class="btn" type="submit">convert</button>
+                </div>
+            </section>
+        </div>
+    </div>
 </body>
 
 </html>
