@@ -29,13 +29,15 @@
                 <div class="row">
                     <p class="rate"></p>
                     <div class="input-group">
-                        <input id="from-val" type="text" value="1">
-                        <select name="from" id="from">
+                        <input id="curr_fr_val" type="text" placeholder="Enter amount">
+                        <select id="curr_fr">
+                            <option value="NGR">NGR</option>
                         </select>
                     </div>
                     <div class="input-group">
-                        <input id="to-val" type="text">
-                        <select name="to" id="to">
+                        <input id="curr_to_val" disabled value="0.00" type="text">
+                        <select id="curr_to">
+                            <option value="USD">USD</option>
                         </select>
                     </div>
                     <button id="convert" class="btn" type="submit">convert</button>
