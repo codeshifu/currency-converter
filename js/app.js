@@ -14,12 +14,29 @@
     convertCurrency() {
       // show loading indicator
       this.view.toggleSpinner(true);
-      const query = this.view.countryCodes().join('_');
+      const query = this.getCountryCodes().join('_');
 
       fetch(`${this.BASE_URL}/convert?q=${query}&compact=ultra`)
         .then(res => res.json())
         .then(result => this.view.render(result[query]))
         .catch(err => console.log('Unable to convert currency.'));
+    }
+
+    getCountryCodes() {
+      let countryCodes = [];
+      this.view.selects.forEach(select => countryCodes.push(select.value));
+
+      return countryCodes;
+    }
+
+    getCurrencyNames() {
+      const currencyNames = [];
+      this.view.selects.forEach(select => {
+        const selectedOption = select.selectedOptions[select.selectedIndex];
+        currencyNames.push(selectedOption.getAttribute('data-currency-name'));
+      });
+
+      return currencyNames;
     }
   }
 
@@ -47,24 +64,8 @@
         : this.loader.classList.add('hide');
     }
 
-    countryCodes() {
-      let result = [];
-      this.selects.forEach(select => result.push(select.value));
-      return result;
-    }
-
     setController(controller) {
       this.controller = controller;
-    }
-
-    getCurrencyNames() {
-      const curr_names = [];
-      this.selects.forEach(select => {
-        const selectedOption = select.selectedOptions[select.selectedIndex];
-        curr_names.push(selectedOption.getAttribute('data-currency-name'));
-      });
-
-      return curr_names;
     }
 
     render(rate) {
@@ -73,7 +74,9 @@
 
       this.toggleSpinner(false);
       this.currTo.value = totalConversion;
-      const [currFromName, currToName] = [...this.getCurrencyNames()];
+      const [currFromName, currToName] = [
+        ...this.controller.getCurrencyNames()
+      ];
       this.rateTxt.innerHTML =
         `${amount} ${currFromName} equals <br/>` +
         `<span class='rateValue'>${totalConversion} ${currToName}</span>`;
