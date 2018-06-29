@@ -12,6 +12,8 @@
     }
 
     convertCurrency() {
+      // show loading indicator
+      this.view.toggleSpinner(true);
       const query = this.view.countryCodes().join('_');
 
       fetch(`${this.BASE_URL}/convert?q=${query}&compact=ultra`)
@@ -29,12 +31,20 @@
       this.toInput = qs('#to-val');
       this.selects = qsa('select');
       this.convertBtn = qs('#convert');
+      this.loader = qs('.lds-ellipsis');
       this.controller = null;
 
       this.convertBtn.addEventListener('click', e => {
         e.preventDefault();
+
         this.controller.convertCurrency();
       });
+    }
+
+    toggleSpinner(visible) {
+      visible
+        ? this.loader.classList.remove('hide')
+        : this.loader.classList.add('hide');
     }
 
     countryCodes() {
@@ -59,8 +69,9 @@
 
     render(rate) {
       const amount = this.currFrom.value,
-        totalConversion = amount * rate;
+        totalConversion = (amount * rate).toFixed(2);
 
+      this.toggleSpinner(false);
       this.currTo.value = totalConversion;
       const [currFromName, currToName] = [...this.getCurrencyNames()];
       this.rateTxt.innerHTML =
