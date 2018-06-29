@@ -8,18 +8,13 @@
   class CurrencyController {
     constructor(view) {
       this.view = view;
-      this.BASE_URL = 'https://free.currencyconverterapi.com/api/v5';
     }
 
     convertCurrency() {
       // show loading indicator
       this.view.toggleSpinner(true);
       const query = this.getCountryCodes().join('_');
-
-      fetch(`${this.BASE_URL}/convert?q=${query}&compact=ultra`)
-        .then(res => res.json())
-        .then(result => this.view.render(result[query]))
-        .catch(err => console.log('Unable to convert currency.'));
+      $convert(query, result => this.view.render(result));
     }
 
     getCountryCodes() {
