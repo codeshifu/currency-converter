@@ -31,7 +31,8 @@
       this.convertBtn = qs('#convert');
       this.controller = null;
 
-      this.convertBtn.addEventListener('click', () => {
+      this.convertBtn.addEventListener('click', e => {
+        e.preventDefault();
         this.controller.convertCurrency();
       });
     }
