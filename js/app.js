@@ -32,7 +32,7 @@
     getCurrencyNames() {
       const currencyNames = [];
       this.view.selects.forEach(select => {
-        const selectedOption = select.selectedOptions[select.selectedIndex];
+        const selectedOption = select.options[select.selectedIndex];
         currencyNames.push(selectedOption.getAttribute('data-currency-name'));
       });
 
