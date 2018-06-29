@@ -6,8 +6,9 @@
   window.qsa = (target, scope) => (scope || document).querySelectorAll(target);
 
   class CurrencyController {
-    constructor(view) {
+    constructor(view, model) {
       this.view = view;
+      this.model = model;
     }
 
     convertCurrency() {
@@ -82,7 +83,8 @@
     constructor() {}
   }
 
+  const m = new CurrencyModel();
   const v = new CurrencyView();
-  const c = new CurrencyController(v);
+  const c = new CurrencyController(v, m);
   v.setController(c);
 })(window);
