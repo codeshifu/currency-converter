@@ -9,6 +9,24 @@
     constructor(view, model) {
       this.view = view;
       this.model = model;
+
+      this._init();
+    }
+
+    async _init() {
+      let currencies = await this.model.getAll();
+      if (currencies && currencies.length > 0) {
+        // TODO: populate view selects with currency data
+      } else {
+        $getCurrencies(currencies => {
+          const currencyIDs = Object.keys(currencies).sort();
+          currencyIDs.forEach(id => {
+            this.model.create(currencies[id]);
+          });
+
+          // TODO: populate view selects with currency data
+        });
+      }
     }
 
     convertCurrency() {
