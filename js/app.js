@@ -80,7 +80,17 @@
   }
 
   class CurrencyModel {
-    constructor() {}
+    constructor() {
+      this.idb = idb.open('cc', 1, this._upgradeDB);
+    }
+
+    _upgradeDB(db) {
+      switch (db.oldVersion) {
+        case 0:
+          db.createObjectStore('currencies', { keyPath: 'id' });
+          db.createObjectStore('converted');
+      }
+    }
   }
 
   const m = new CurrencyModel();
