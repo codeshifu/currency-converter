@@ -34,7 +34,10 @@
       // show loading indicator
       this.view.toggleSpinner(true);
       const query = this.getCountryCodes().join('_');
-      $convert(query, result => this.view.render(result));
+      $convert(query, result => {
+        this.model.saveConversion(query, result);
+        this.view.render(result);
+      });
     }
 
     getCountryCodes() {
@@ -137,6 +140,15 @@
 
         return tx.complete;
       });
+    }
+
+    saveConversion(key, value) {
+      this.idb.then(db =>
+        db
+          .transaction(this.STORE_CONVERTED, 'readwrite')
+          .objectStore(this.STORE_CONVERTED)
+          .put(value, key)
+      );
     }
   }
 
