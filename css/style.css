@@ -79,6 +79,7 @@ nav {
   color: #fff;
   font-weight: 600;
   font-style: italic;
+  max-width: 100px;
   border: none;
   border-radius: 0 3px 3px 0;
 }
