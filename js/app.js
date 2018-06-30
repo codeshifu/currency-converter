@@ -82,14 +82,34 @@
   class CurrencyModel {
     constructor() {
       this.idb = idb.open('cc', 1, this._upgradeDB);
+      this.STORE_CURRENCIES = 'currencies';
+      this.STORE_CONVERTED = 'converted';
     }
 
     _upgradeDB(db) {
       switch (db.oldVersion) {
         case 0:
-          db.createObjectStore('currencies', { keyPath: 'id' });
-          db.createObjectStore('converted');
+          db.createObjectStore(this.STORE_CURRENCIES, { keyPath: 'id' });
+          db.createObjectStore(this.STORE_CONVERTED);
       }
+    }
+
+    getAll() {
+      return this.idb.then(db =>
+        db
+          .transaction(this.STORE_CURRENCIES)
+          .objectStore(this.STORE_CURRENCIES)
+          .getAll()
+      );
+    }
+
+    create(currencyObj) {
+      this.idb.then(db => {
+        const tx = db.transaction(this.STORE_CURRENCIES, 'readwrite');
+        tx.objectStore(this.STORE_CURRENCIES).put(currencyObj);
+
+        return tx.complete;
+      });
     }
   }
 
