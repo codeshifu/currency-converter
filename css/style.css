@@ -58,7 +58,7 @@ nav {
   height: 36px;
   margin-bottom: 16px;
 }
-.input-group input[type='text'] {
+.input-group input[type='number'] {
   display: block;
   height: inherit;
   background: #65717e;
