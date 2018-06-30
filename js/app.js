@@ -33,7 +33,13 @@
     convertCurrency() {
       // show loading indicator
       this.view.toggleSpinner(true);
+
       const query = this.getCountryCodes().join('_');
+
+      this.model.getConversion(query).then(conversionRate => {
+        if (conversionRate) this.view.render(conversionRate);
+      });
+
       $convert(query, result => {
         this.model.saveConversion(query, result);
         this.view.render(result);
@@ -142,6 +148,14 @@
       });
     }
 
+    getConversion(key) {
+      return this.idb.then(db =>
+        db
+          .transaction(this.STORE_CONVERTED)
+          .objectStore(this.STORE_CONVERTED)
+          .get(key)
+      );
+    }
     saveConversion(key, value) {
       this.idb.then(db =>
         db
