@@ -36,11 +36,14 @@
 
       const query = this.getCountryCodes().join('_');
 
+      let requestPending = true;
+
       this.model.getConversion(query).then(conversionRate => {
-        if (conversionRate) this.view.render(conversionRate);
+        if (conversionRate && requestPending) this.view.render(conversionRate);
       });
 
       $convert(query, result => {
+        requestPending = false;
         this.model.saveConversion(query, result);
         this.view.render(result);
       });
