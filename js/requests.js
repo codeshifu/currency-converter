@@ -9,6 +9,6 @@
   window.$getCurrencies = cb => {
     fetch('/currencies.json')
       .then(res => res.json())
-      .then(currencies => cb(currencies));
+      .then(currencies => cb(currencies.results));
   };
 })(window);
