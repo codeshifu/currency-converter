@@ -16,7 +16,7 @@
     async _init() {
       let currencies = await this.model.getAll();
       if (currencies && currencies.length > 0) {
-        // TODO: populate view selects with currency data
+        this.view.populateOptionsWithCurrency(currencies);
       } else {
         $getCurrencies(currencies => {
           const currencyIDs = Object.keys(currencies).sort();
@@ -25,6 +25,7 @@
           });
 
           // TODO: populate view selects with currency data
+          this.view.populateOptionsWithCurrency(currencies);
         });
       }
     }
@@ -67,7 +68,6 @@
 
       this.convertBtn.addEventListener('click', e => {
         e.preventDefault();
-
         this.controller.convertCurrency();
       });
     }
@@ -80,6 +80,15 @@
 
     setController(controller) {
       this.controller = controller;
+    }
+
+    populateOptionsWithCurrency(currencies) {
+      this.selects.forEach(select => {
+        select.innerHTML = currencies.map(currency => {
+          const { currencyName, id } = currency;
+          return `<option data-currency-name='${currencyName}' value='${id}'>${currencyName}</option>`;
+        });
+      });
     }
 
     render(rate) {
