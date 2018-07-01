@@ -173,4 +173,10 @@
   const v = new CurrencyView();
   const c = new CurrencyController(v, m);
   v.setController(c);
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').then(() => {
+      console.log('serviceWorker registered.');
+    });
+  }
 })(window);
