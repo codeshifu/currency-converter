@@ -18,13 +18,14 @@
       if (currencies && currencies.length > 0) {
         this.view.populateOptionsWithCurrency(currencies);
       } else {
-        $getCurrencies(currencies => {
+        $getCurrencies(async currencies => {
           const currencyIDs = Object.keys(currencies).sort();
           currencyIDs.forEach(id => {
             this.model.create(currencies[id]);
           });
 
           // TODO: populate view selects with currency data
+          currencies = await this.model.getAll();
           this.view.populateOptionsWithCurrency(currencies);
         });
       }
