@@ -2,12 +2,12 @@ const staticCache = 'currency-converter-v1';
 const freeCurrConverterAPI = 'free-currency-converter-v1';
 
 const APP_SHELL = [
-  '/',
-  '/index.html',
-  '/css/style.css',
-  '/js/idb.js',
-  '/js/requests.js',
-  '/js/app.js'
+  './',
+  'index.html',
+  'css/style.css',
+  'js/idb.js',
+  'js/requests.js',
+  'js/app.js'
 ];
 
 const app_only_cache = [staticCache, freeCurrConverterAPI];
