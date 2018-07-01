@@ -10,6 +10,10 @@ body {
   line-height: 1.4em;
 }
 
+body,
+html {
+  overflow: hidden;
+}
 nav {
   background-color: #243548;
   padding: 8px;
@@ -24,7 +28,7 @@ nav {
   background: #243548;
   padding: 16px;
   color: #fff;
-  overflow: auto;
+  position: relative;
 }
 
 .hero .intro h3 {
@@ -140,6 +144,52 @@ nav {
   }
 }
 
+/* CSS3 MARQUEE */
+@-webkit-keyframes ticker {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+@keyframes ticker {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+.ticker-wrap {
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  padding-left: 100%;
+  bottom: 8px;
+  box-sizing: content-box;
+}
+.ticker-wrap .ticker {
+  display: inline-block;
+  white-space: nowrap;
+  padding-right: 100%;
+  box-sizing: content-box;
+  -webkit-animation: ticker 18s linear 0s infinite;
+  -moz-animation: ticker 18s linear 0s infinite;
+  animation: ticker 18s linear 0s infinite;
+}
+.ticker-wrap .ticker__item {
+  display: inline-block;
+  padding: 0 0.3rem;
+  color: white;
+}
+
 .hide {
   display: none;
 }
@@ -192,12 +242,9 @@ nav {
 
   .intro h3 {
     font-size: 0.88em;
-    font-weight: 400;
+    font-weight: 500;
   }
 
-  .intro {
-    border-bottom: 2px solid #3b4b5d;
-  }
   .intro p {
     font-weight: 100;
     font-size: 0.75em;
