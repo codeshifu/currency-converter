@@ -1,4 +1,5 @@
 const staticCache = 'currency-converter-v1';
+const freeCurrConverterAPI = 'free-currency-converter-v1';
 
 const APP_SHELL = [
   '/',
@@ -9,7 +10,7 @@ const APP_SHELL = [
   '/js/app.js'
 ];
 
-const app_only_cache = [staticCache];
+const app_only_cache = [staticCache, freeCurrConverterAPI];
 
 self.oninstall = event => {
   self.skipWaiting();
@@ -36,4 +37,16 @@ self.onactivate = e => {
       )
     )
   );
+};
+
+self.onfetch = e => {
+  const requestURL = new URL(e.request.url);
+
+  if (requestURL.hostname === location.hostname) {
+    e.respondWith(cacheOrNetwork(requestURL));
+  }
+};
+
+const cacheOrNetwork = request => {
+  return caches.match(request).then(response => response || fetch(request));
 };
