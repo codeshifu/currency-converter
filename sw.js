@@ -9,6 +9,8 @@ const APP_SHELL = [
   '/js/app.js'
 ];
 
+const app_only_cache = [staticCache];
+
 self.oninstall = event => {
   self.skipWaiting();
 
@@ -19,4 +21,19 @@ const precache = () => {
   return caches.open(staticCache).then(cache => {
     return cache.addAll(APP_SHELL);
   });
+};
+
+self.onactivate = e => {
+  self.clients && clients.claim ? clients.claim() : null;
+
+  e.waitUntil(
+    caches.keys().then(cacheNames =>
+      Promise.all(
+        cacheNames.map(cacheName => {
+          if (app_only_cache.indexOf(cacheName) === -1)
+            return caches.delete(cacheName);
+        })
+      )
+    )
+  );
 };
