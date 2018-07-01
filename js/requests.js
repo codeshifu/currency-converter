@@ -12,7 +12,7 @@
   };
 
   window.$getCurrencies = cb => {
-    fetch('/currencies.json')
+    fetch(`${BASE_URL}/currencies`)
       .then(res => res.json())
       .then(currencies => cb(currencies.results))
       .catch(err => console.log('Error fetching currencies.'));
