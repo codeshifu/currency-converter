@@ -176,6 +176,44 @@
   v.setController(c);
 
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js');
+    navigator.serviceWorker.register('./sw.js').then(() => {
+      if (!navigator.serviceWorker.controller) {
+        console.log('yo');
+        navigator.serviceWorker.addEventListener(
+          'controllerchange',
+          function changeListener() {
+            // new worker has claimed. warm up cache
+            console.log('warm up cache');
+            fetch('https://ipapi.co/json/')
+              .then(response => response.json())
+              .then(res => {
+                const countryCurrency = res.currency;
+                if (countryCurrency) {
+                  const popularCurrency = [
+                    'USD',
+                    'GBP',
+                    'EUR',
+                    'CHF',
+                    'JPY',
+                    'CNY'
+                  ];
+
+                  popularCurrency
+                    .filter(curr => curr !== countryCurrency)
+                    .forEach(curr => {
+                      $convert(`${countryCurrency}_${curr}`, () => {});
+                    });
+                }
+              })
+              .catch(() => null);
+
+            navigator.serviceWorker.removeEventListener(
+              'controllerchange',
+              changeListener
+            );
+          }
+        );
+      }
+    });
   }
 })(window);
