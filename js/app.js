@@ -121,7 +121,7 @@
 
   class CurrencyModel {
     constructor() {
-      this.idb = idb.open('cc', 1, this._upgradeDB);
+      this.idb = idb.open('cc', 1, db => this._upgradeDB(db));
       this.STORE_CURRENCIES = 'currencies';
       this.STORE_CONVERTED = 'converted';
     }
