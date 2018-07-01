@@ -178,7 +178,6 @@
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').then(() => {
       if (!navigator.serviceWorker.controller) {
-        console.log('yo');
         navigator.serviceWorker.addEventListener(
           'controllerchange',
           function changeListener() {
